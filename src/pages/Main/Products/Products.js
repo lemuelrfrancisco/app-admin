@@ -15,7 +15,7 @@ function Products() {
       <h1>Products</h1>
       <div className="content">Products page</div>
       <div>
-        <table className="products-table" cellspacing="0" cellpadding="0">
+        <table className="products-table" cellSpacing="0" cellPadding="0">
           <tr>
             <td>ID</td>
             <td></td>
