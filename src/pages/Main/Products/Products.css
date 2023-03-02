@@ -2,14 +2,14 @@
   width: 100%;
   border: none;
 }
-.products-table tr:first-child {
+.products-table thead tr {
   font-weight: bold;
   height: 40px;
 }
 .products-table tr td {
   padding-left: 10px;
 }
-.products-table tr:nth-child(odd) {
+.products-table tbody tr:nth-child(odd) {
   background-color: lightblue;
 }
 .product-thumbnail {

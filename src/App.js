@@ -9,6 +9,7 @@ import Products from "./pages/Main/Products/Products";
 
 import { useContext, useEffect, useState } from "react";
 import AuthContextProvider, { AuthContext } from "./Contexts/AuthContext";
+import ProductContextProvider from "./Contexts/ProductContext";
 
 function AuthNavigation() {
   return (
@@ -25,7 +26,15 @@ function AuthenticatedNavigation() {
     <Routes>
       <Route path="/main" element={<Main />}>
         <Route exact path="dashboard" element={<Dashboard />} />
-        <Route exact path="products" element={<Products />} />
+        <Route
+          exact
+          path="products"
+          element={
+            <ProductContextProvider>
+              <Products />
+            </ProductContextProvider>
+          }
+        />
       </Route>
       <Route path="*" element={<Navigate replace to="/main/dashboard" />} />
     </Routes>
