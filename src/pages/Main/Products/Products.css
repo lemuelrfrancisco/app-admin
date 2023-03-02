@@ -1,0 +1,26 @@
+.products-table {
+  width: 100%;
+  border: none;
+}
+.products-table tr:first-child {
+  font-weight: bold;
+  height: 40px;
+}
+.products-table tr td {
+  padding-left: 10px;
+}
+.products-table tr:nth-child(odd) {
+  background-color: lightblue;
+}
+.product-thumbnail {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  padding: 0 10px;
+}
+.product-thumbnail img {
+  display: block;
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+}
