@@ -2,9 +2,12 @@ import { useForm } from "react-hook-form";
 import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -24,6 +27,7 @@ function Login() {
     })
       .then((res) => {
         localStorage.setItem("accessToken", res.data.access_token);
+        authCtx.authenticate(res.data.access_token);
         navigate("/main/dashboard");
       })
       .catch((e) => {

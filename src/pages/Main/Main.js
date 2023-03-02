@@ -1,34 +1,37 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./Main.css";
+import { useContext } from "react";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 function Main() {
-  const accessToken = localStorage.getItem("accessToken");
+  const authCtx = useContext(AuthContext);
+
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    authCtx.signOut();
     navigate("/");
   };
 
   useEffect(() => {
     if (
-      accessToken === undefined ||
-      accessToken === "" ||
-      accessToken === null
+      authCtx.accessToken === undefined ||
+      authCtx.accessToken === "" ||
+      authCtx.accessToken === null
     ) {
       handleLogout();
     }
-  }, []);
+  }, [authCtx.accessToken]);
   return (
     <div className="Main">
       <div className="container">
         <div className="navigation">
           <ul>
             <li>
-              <a href="/main/dashboard">Dashboard</a>
+              <Link to="/main/dashboard">Dashboard</Link>
             </li>
             <li>
-              <a href="/main/products">Products</a>
+              <Link to="/main/products">Products</Link>
             </li>
             <li className="logout">
               <a onClick={handleLogout}>Logout</a>
