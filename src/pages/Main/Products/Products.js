@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import "./Products.css";
 import { useContext } from "react";
 import { ProductContext } from "../../../Contexts/ProductContext";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Contexts/AuthContext";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const productCtx = useContext(ProductContext);
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     axios.get("/products").then((response) => {
@@ -15,7 +18,19 @@ function Products() {
   }, []);
 
   const handleDeleteProduct = (data) => {
-    productCtx.deleteProduct(data);
+    axios
+      .delete(`/products/${data.id}`, {
+        headers: {
+          Authorization: `Bearer ${authCtx.accessToken}`,
+        },
+      })
+      .then((res) => {
+        alert(res.data.message);
+        productCtx.deleteProduct(data);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   };
 
   useEffect(() => {
@@ -26,7 +41,9 @@ function Products() {
       <h1>Products</h1>
       <div className="content">
         <div>
-          <button>Add Product</button>
+          <Link to="/main/products/form">
+            <button>Add Product</button>
+          </Link>
         </div>
         <div>
           <table className="products-table" cellSpacing="0" cellPadding="0">
@@ -46,13 +63,17 @@ function Products() {
                   <tr key={i}>
                     <td>{product.id}</td>
                     <td className="product-thumbnail">
-                      <img src={`http://localhost/${product.image}`} />
+                      <img
+                        src={`http://localhost/php-rest-api-git/${product.image}`}
+                      />
                     </td>
                     <td>{product.name}</td>
                     <td>{product.price}</td>
                     <td>{product.size}</td>
                     <td>
-                      <button>Edit</button>
+                      <Link to={`/main/products/form/${product.id}`}>
+                        <button>Edit</button>
+                      </Link>
                       <button onClick={() => handleDeleteProduct(product)}>
                         Delete
                       </button>

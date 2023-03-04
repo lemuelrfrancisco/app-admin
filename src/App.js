@@ -10,13 +10,14 @@ import Products from "./pages/Main/Products/Products";
 import { useContext, useEffect, useState } from "react";
 import AuthContextProvider, { AuthContext } from "./Contexts/AuthContext";
 import ProductContextProvider from "./Contexts/ProductContext";
+import ProductForm from "./pages/Main/Products/ProductForm/ProductForm";
 
 function AuthNavigation() {
   return (
     <Routes>
       <Route exact path="/" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
-      <Route path="*" element={<Navigate replace to="/" />} />
+      {/* <Route path="*" element={<Navigate replace to="/" />} /> */}
     </Routes>
   );
 }
@@ -27,16 +28,23 @@ function AuthenticatedNavigation() {
       <Route path="/main" element={<Main />}>
         <Route exact path="dashboard" element={<Dashboard />} />
         <Route
-          exact
           path="products"
           element={
             <ProductContextProvider>
               <Products />
             </ProductContextProvider>
           }
-        />
+        ></Route>
+        <Route
+          path="products/form/:id?"
+          element={
+            <ProductContextProvider>
+              <ProductForm />
+            </ProductContextProvider>
+          }
+        ></Route>
       </Route>
-      <Route path="*" element={<Navigate replace to="/main/dashboard" />} />
+      <Route path="/" element={<Navigate replace to="/main/dashboard" />} />
     </Routes>
   );
 }
@@ -53,7 +61,6 @@ function Navigation() {
       authCtx.authenticate(accessToken);
     }
   }, []);
-
   return (
     <BrowserRouter>
       {authCtx.isAuthenticated ? (
